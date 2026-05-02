@@ -5,7 +5,577 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Algebra Explorer | Form One Mathematics</title>
     <style>
+        * {<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Algebra Explorer | Form One Mathematics</title>
+    <style>
         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f7f9fc 0%, #eef2f5 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* header & hero */
+        .hero {
+            background: linear-gradient(135deg, #0b2b3b, #1b4f6e);
+            border-radius: 2rem;
+            padding: 2rem 2rem 2rem 2.5rem;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 15px 30px -12px rgba(0,0,0,0.2);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 span {
+            background: #f4c542;
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            color: #1e2f3a;
+            vertical-align: middle;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 0.8rem;
+            max-width: 85%;
+            opacity: 0.9;
+        }
+
+        /* card grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            font-size: 1.7rem;
+            border-left: 6px solid #f4c542;
+            padding-left: 0.8rem;
+            margin-bottom: 1rem;
+            color: #155f7c;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.5rem 0;
+            color: #2c5a6e;
+        }
+
+        .example-box {
+            background: #fef8e7;
+            border-left: 5px solid #f4b642;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .algebra-term {
+            font-weight: 600;
+            color: #c4450c;
+        }
+
+        .quiz-area {
+            background: #f1f5f9;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .quiz-input {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 0.8rem 0;
+        }
+
+        .quiz-input input {
+            flex: 2;
+            min-width: 140px;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .quiz-input input:focus {
+            border-color: #f4b642;
+            box-shadow: 0 0 0 3px rgba(244,182,66,0.2);
+        }
+
+        button {
+            background: #1b4f6e;
+            border: none;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background: #0f3b52;
+            transform: scale(0.97);
+        }
+
+        .feedback {
+            margin-top: 0.7rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.4rem 0;
+        }
+
+        .correct {
+            color: #15803d;
+            background: #e0f2e7;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+        }
+
+        .wrong {
+            color: #b91c1c;
+            background: #fee2e2;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, #ccc, transparent);
+        }
+
+        .tip-note {
+            background: #e6f4ff;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.85rem;
+            color: #4a6272;
+            border-top: 1px solid #d4dfe9;
+            padding-top: 1.5rem;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>
+            📐 Algebra Adventure 
+            <span>Form One</span>
+        </h1>
+        <p>🔢 Master variables, expressions, and simple equations — step by step. 
+            Algebra is like a puzzle; learn the rules and solve anything!</p>
+    </div>
+
+    <div class="grid">
+        <!-- CARD 1: WHAT IS ALGEBRA -->
+        <div class="card">
+            <h2>🧠 1. What is Algebra?</h2>
+            <p>Algebra uses <strong class="algebra-term">letters (variables)</strong> to represent unknown numbers. 
+            Instead of saying "a number plus 3", we write <code>x + 3</code>.</p>
+            <div class="example-box">
+                ✨ <strong>Examples:</strong><br>
+                • <code>y + 5</code> → a number increased by 5<br>
+                • <code>2n</code> → twice a number<br>
+                • <code>a - 7</code> → seven less than a number
+            </div>
+            <div class="tip-note">
+                💡 <strong>Key fact:</strong> In algebra, we write multiplication without '×' → <code>3 × m</code> becomes <code>3m</code>.<br>
+                Division: <code>n ÷ 4</code> becomes <code>n/4</code> or <code>n/4</code>.
+            </div>
+        </div>
+
+        <!-- CARD 2: LIKE TERMS & SIMPLIFYING -->
+        <div class="card">
+            <h2>📚 2. Like Terms & Simplifying</h2>
+            <p><strong>Like terms</strong> have the same variable raised to the same power.</p>
+            <div class="example-box">
+                ✅ <code>3x + 5x = 8x</code>  &nbsp;&nbsp; (both are 'x')<br>
+                ✅ <code>7y - 2y = 5y</code><br>
+                ⚠️ <code>4a + 3b</code> cannot be simplified further (different letters).
+            </div>
+            <h3>📝 Simplify this expression:</h3>
+            <div class="quiz-area">
+                <div class="quiz-question">🧮 <code>5p + 2q + 3p - q</code> = ?</div>
+                <div class="quiz-input">
+                    <input type="text" id="simplifyAnswer" placeholder="Your simplified expression e.g., 8p + q">
+                    <button id="checkSimplifyBtn">Check</button>
+                </div>
+                <div id="simplifyFeedback" class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- CARD 3: SOLVING EQUATIONS (basic) -->
+        <div class="card">
+            <h2>⚖️ 3. Solving Simple Equations</h2>
+            <p>We keep the equation <strong>balanced</strong> like a scale. To find the variable, do the opposite operation.</p>
+            <div class="example-box">
+                ✔️ <code>x + 7 = 12</code>  → subtract 7 both sides → <code>x = 5</code><br>
+                ✔️ <code>3y = 18</code>    → divide both sides by 3 → <code>y = 6</code><br>
+                ✔️ <code>a - 4 = 9</code>   → add 4 both sides → <code>a = 13</code>
+            </div>
+            <div class="quiz-area">
+                <div class="quiz-question">🌟 Solve for <strong>t</strong>: <code>t + 15 = 42</code></div>
+                <div class="quiz-input">
+                    <input type="number" id="equationAnswer" placeholder="Enter value of t">
+                    <button id="checkEquationBtn">Solve</button>
+                </div>
+                <div id="equationFeedback" class="feedback"></div>
+            </div>
+            <div class="quiz-area" style="margin-top: 0.6rem;">
+                <div class="quiz-question">🌟 Solve for <strong>m</strong>: <code>4m = 36</code></div>
+                <div class="quiz-input">
+                    <input type="number" id="equationAnswer2" placeholder="Enter m">
+                    <button id="checkEquationBtn2">Solve</button>
+                </div>
+                <div id="equationFeedback2" class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- CARD 4: WRITING EXPRESSIONS FROM WORDS -->
+        <div class="card">
+            <h2>✍️ 4. Words → Algebra</h2>
+            <p>Turning real-life problems into algebra is a superpower!</p>
+            <div class="example-box">
+                🟢 "A number decreased by 8" → <code>n - 8</code><br>
+                🟢 "Double a number plus 5" → <code>2x + 5</code><br>
+                🟢 "The sum of y and 12, divided by 3" → <code>(y + 12)/3</code>
+            </div>
+            <div class="quiz-area">
+                <div class="quiz-question">📖 Translate into algebra: <strong>"Three times a number, increased by 10"</strong></div>
+                <div class="quiz-input">
+                    <input type="text" id="translateAnswer" placeholder="Use x for the number">
+                    <button id="checkTranslateBtn">Check</button>
+                </div>
+                <div id="translateFeedback" class="feedback"></div>
+            </div>
+            <div class="tip-note">
+                🧠 Always read carefully: "times" means multiply, "increased by" means add, "less than" is subtraction.
+            </div>
+        </div>
+    </div>
+
+    <!-- EXTRA PRACTICE SECTION: INTERACTIVE CHALLENGE -->
+    <div class="card" style="margin-bottom: 1rem;">
+        <h2>🎯 Algebra Challenge Zone</h2>
+        <p>Test your skills with random questions! Click "New Question" and type your answer.</p>
+        <div id="randomQuizArea" style="background: #f9f3e3; border-radius: 1.2rem; padding: 1rem;">
+            <div id="randomQuestion" class="quiz-question" style="font-size: 1.3rem;">✨ Question will appear here</div>
+            <div class="quiz-input">
+                <input type="text" id="randomAnswerInput" placeholder="Your answer (number or expression)">
+                <button id="submitRandomBtn">Submit</button>
+                <button id="newRandomBtn" style="background: #4b6e7c;">New Question</button>
+            </div>
+            <div id="randomFeedback" class="feedback"></div>
+        </div>
+    </div>
+
+    <footer>
+        🌟 Algebra is everywhere! Keep practicing, keep asking "why". Every master was once a beginner.<br>
+        📘 Form One Mathematics | Variables, expressions & equations
+    </footer>
+</div>
+
+<script>
+    // ---------- SIMPLIFY LIKE TERMS ----------
+    const simplifyInput = document.getElementById('simplifyAnswer');
+    const simplifyBtn = document.getElementById('checkSimplifyBtn');
+    const simplifyFeedback = document.getElementById('simplifyFeedback');
+
+    simplifyBtn.addEventListener('click', () => {
+        let userAnswer = simplifyInput.value.trim().toLowerCase().replace(/\s/g, '');
+        // expected: 8p + q or 8p+q (also accept 8p+1q, but we check core)
+        // we normalize: 8p+q, 8p+ q, 8p+q etc.
+        let correctSimple = "8p+q";
+        let alternative1 = "8p+1q";
+        let alternative2 = "8p + q";
+        let normalizedUser = userAnswer.replace(/\s/g, '');
+        if (normalizedUser === correctSimple || normalizedUser === alternative1 || normalizedUser === "8p+q" || normalizedUser === "8p+ q") {
+            simplifyFeedback.innerHTML = '<span class="correct">✔️ Perfect! 5p+3p = 8p, and 2q - q = q → 8p + q.</span>';
+        } else if (normalizedUser === "8p+1q" || normalizedUser === "8p+1q") {
+            simplifyFeedback.innerHTML = '<span class="correct">✔️ Correct! Usually we write q, but 1q is fine. Great work!</span>';
+        } else {
+            simplifyFeedback.innerHTML = '<span class="wrong">❌ Not quite. Combine p terms: 5p+3p = 8p. Combine q terms: 2q - q = q. Answer: 8p + q</span>';
+        }
+    });
+
+    // ---------- EQUATION 1: t + 15 = 42 ----------
+    const eqAns = document.getElementById('equationAnswer');
+    const eqBtn = document.getElementById('checkEquationBtn');
+    const eqFeed = document.getElementById('equationFeedback');
+
+    eqBtn.addEventListener('click', () => {
+        let val = parseFloat(eqAns.value);
+        if (isNaN(val)) {
+            eqFeed.innerHTML = '<span class="wrong">🔢 Please enter a number.</span>';
+            return;
+        }
+        if (val === 27) {
+            eqFeed.innerHTML = '<span class="correct">✅ Fantastic! t = 27 because 27 + 15 = 42.</span>';
+        } else {
+            eqFeed.innerHTML = `<span class="wrong">❌ t = ${val} is not correct. Subtract 15 from both sides: 42 - 15 = 27. Try again!</span>`;
+        }
+    });
+
+    // Equation 2: 4m = 36
+    const eqAns2 = document.getElementById('equationAnswer2');
+    const eqBtn2 = document.getElementById('checkEquationBtn2');
+    const eqFeed2 = document.getElementById('equationFeedback2');
+
+    eqBtn2.addEventListener('click', () => {
+        let val = parseFloat(eqAns2.value);
+        if (isNaN(val)) {
+            eqFeed2.innerHTML = '<span class="wrong">Please enter a number for m.</span>';
+            return;
+        }
+        if (val === 9) {
+            eqFeed2.innerHTML = '<span class="correct">✅ Exactly! m = 9 because 4 × 9 = 36.</span>';
+        } else {
+            eqFeed2.innerHTML = `<span class="wrong">❌ Not this time. Divide both sides by 4: 36 ÷ 4 = 9. So m = 9.</span>`;
+        }
+    });
+
+    // ---------- TRANSLATE WORDS TO ALGEBRA ----------
+    const transInput = document.getElementById('translateAnswer');
+    const transBtn = document.getElementById('checkTranslateBtn');
+    const transFeed = document.getElementById('translateFeedback');
+
+    transBtn.addEventListener('click', () => {
+        let userExpr = transInput.value.trim().toLowerCase().replace(/\s/g, '');
+        // accepted forms: 3x+10, 3*x+10, 3x +10? we handle
+        let normalized = userExpr.replace(/\*/g, '');
+        // we expect 3x+10 or 3x+10  (3 times x increased by 10)
+        if (normalized === "3x+10" || normalized === "3x+10" || normalized === "3x+10" || normalized === "3*x+10" || userExpr === "3x + 10") {
+            transFeed.innerHTML = '<span class="correct">✔️ Correct! "Three times a number" = 3x, "increased by 10" = +10 → 3x + 10.</span>';
+        } else if (normalized.includes("3x+10") || normalized === "3x+10") {
+            transFeed.innerHTML = '<span class="correct">✔️ Yes, that works! 3x + 10 is the correct expression.</span>';
+        } else {
+            transFeed.innerHTML = '<span class="wrong">⚠️ Remember: "three times a number" means 3 × the number (x). Then add 10 → 3x + 10. Try again!</span>';
+        }
+    });
+
+    // ---------- RANDOM CHALLENGE ZONE (FORM ONE LEVEL) ----------
+    const randomQuestionDiv = document.getElementById('randomQuestion');
+    const randomAnswerInput = document.getElementById('randomAnswerInput');
+    const submitRandomBtn = document.getElementById('submitRandomBtn');
+    const newRandomBtn = document.getElementById('newRandomBtn');
+    const randomFeedbackSpan = document.getElementById('randomFeedback');
+
+    // Question bank that covers Form One algebra (expressions, simple equations, simplifying)
+    let currentQuestionObj = null;
+
+    function generateRandomQuestion() {
+        const types = [
+            'simplify_like', 'solve_simple', 'evaluate_exp', 'word_to_expr'
+        ];
+        const type = types[Math.floor(Math.random() * types.length)];
+        
+        if (type === 'simplify_like') {
+            // create random like terms: e.g., 4a + 2b + 3a - b
+            let coeff1 = Math.floor(Math.random() * 7) + 1; // 1-7
+            let coeff2 = Math.floor(Math.random() * 6) + 1;
+            let coeff3 = Math.floor(Math.random() * 6) + 1;
+            let coeff4 = Math.floor(Math.random() * 6) + 1;
+            let var1 = 'x';
+            let var2 = 'y';
+            let questionText = `Simplify: ${coeff1}${var1} + ${coeff2}${var2} + ${coeff3}${var1} - ${coeff4}${var2}`;
+            let simplifiedX = coeff1 + coeff3;
+            let simplifiedY = coeff2 - coeff4;
+            let answerExpr = '';
+            if (simplifiedY === 0) answerExpr = `${simplifiedX}${var1}`;
+            else if (simplifiedY > 0) answerExpr = `${simplifiedX}${var1}+${simplifiedY}${var2}`;
+            else answerExpr = `${simplifiedX}${var1}${simplifiedY}${var2}`;
+            // handling zero X (just in case)
+            if (simplifiedX === 0 && simplifiedY !== 0) answerExpr = `${simplifiedY}${var2}`;
+            if (simplifiedX === 0 && simplifiedY === 0) answerExpr = `0`;
+            // normalize answer without spaces
+            let normalizedAnswer = answerExpr.replace(/\s/g, '');
+            return { text: questionText, answer: normalizedAnswer, type: 'expression' };
+        } 
+        else if (type === 'solve_simple') {
+            // simple equation: x + a = b  or  c x = d
+            let subType = Math.random() > 0.5 ? 'add' : 'mult';
+            if (subType === 'add') {
+                let a = Math.floor(Math.random() * 15) + 1; // 1-15
+                let b = a + Math.floor(Math.random() * 20) + 5;
+                let solution = b - a;
+                let questionText = `Solve for x: x + ${a} = ${b}`;
+                return { text: questionText, answer: solution.toString(), type: 'number' };
+            } else {
+                let coeff = Math.floor(Math.random() * 7) + 2; // 2-8
+                let result = coeff * (Math.floor(Math.random() * 10) + 1);
+                let solution = result / coeff;
+                let questionText = `Solve: ${coeff}x = ${result}`;
+                return { text: questionText, answer: solution.toString(), type: 'number' };
+            }
+        }
+        else if (type === 'evaluate_exp') {
+            // evaluate expression when variable given: e.g., 2n + 3 when n=4 -> 11
+            let coeff = Math.floor(Math.random() * 6) + 1;
+            let constant = Math.floor(Math.random() * 12) + 1;
+            let nVal = Math.floor(Math.random() * 8) + 2;
+            let result = coeff * nVal + constant;
+            let questionText = `If n = ${nVal}, evaluate: ${coeff}n + ${constant}`;
+            return { text: questionText, answer: result.toString(), type: 'number' };
+        }
+        else { // word_to_expr
+            let phrases = [
+                { text: "Four times a number minus 7", expr: "4x-7" },
+                { text: "A number divided by 5, plus 2", expr: "x/5+2" },
+                { text: "The sum of twice a number and 9", expr: "2x+9" },
+                { text: "Seven less than a number", expr: "x-7" },
+                { text: "Triple a number increased by 4", expr: "3x+4" }
+            ];
+            let chosen = phrases[Math.floor(Math.random() * phrases.length)];
+            return { text: `Write as algebra: "${chosen.text}" (use x for number)`, answer: chosen.expr, type: 'expression' };
+        }
+    }
+
+    function loadNewQuestion() {
+        currentQuestionObj = generateRandomQuestion();
+        randomQuestionDiv.innerText = `🧩 ${currentQuestionObj.text}`;
+        randomAnswerInput.value = '';
+        randomFeedbackSpan.innerHTML = '';
+    }
+
+    function checkRandomAnswer() {
+        if (!currentQuestionObj) {
+            randomFeedbackSpan.innerHTML = '<span class="wrong">Click "New Question" first!</span>';
+            return;
+        }
+        let userRaw = randomAnswerInput.value.trim().toLowerCase().replace(/\s/g, '');
+        let correctRaw = currentQuestionObj.answer.toLowerCase().replace(/\s/g, '');
+        
+        // special handling for expressions: accept * as optional, normalize 'x' multiplication
+        let userNorm = userRaw.replace(/\*/g, '');
+        let correctNorm = correctRaw.replace(/\*/g, '');
+        
+        // Also for fractions like x/5+2: could be written as x/5+2 (no brackets) we must allow.
+        let isMatch = false;
+        if (currentQuestionObj.type === 'number') {
+            // numeric comparison
+            let userNum = parseFloat(userRaw);
+            let correctNum = parseFloat(correctRaw);
+            if (!isNaN(userNum) && !isNaN(correctNum) && Math.abs(userNum - correctNum) < 0.0001) {
+                isMatch = true;
+            } else {
+                isMatch = false;
+            }
+        } else {
+            // expression comparison: we compare normalized strings, but allow common variations like 4x-7 vs 4*x-7
+            if (userNorm === correctNorm) {
+                isMatch = true;
+            } else {
+                // additional tolerance: sometimes like 4x -7 vs 4x-7 already fixed, or order? For like 2x+9 vs 9+2x not same, but we give hint
+                // but we don't want overly strict: but for simplicity, checking if same after removing spaces works. 9+2x is technically correct but order? avoid confusion
+                // we also check commutative? but mostly okay.
+                if (currentQuestionObj.text.includes("twice a number and 9") && (userNorm === "9+2x" || userNorm === "2x+9")) isMatch = true;
+                if (currentQuestionObj.text.includes("Four times a number minus") && (userNorm === "4x-7")) isMatch = true;
+                if (currentQuestionObj.text.includes("Triple a number increased") && (userNorm === "3x+4")) isMatch = true;
+                if (currentQuestionObj.text.includes("Seven less than a number") && (userNorm === "x-7" || userNorm === "x+ -7")) isMatch = true;
+                if (currentQuestionObj.text.includes("number divided by 5, plus 2") && (userNorm === "x/5+2" || userNorm === "(x/5)+2")) isMatch = true;
+            }
+        }
+        
+        if (isMatch) {
+            randomFeedbackSpan.innerHTML = '<span class="correct">🎉 Brilliant! Absolutely correct. Keep it up!</span>';
+        } else {
+            randomFeedbackSpan.innerHTML = `<span class="wrong">💪 Not this time. Correct answer: ${currentQuestionObj.answer}. Review and try again!</span>`;
+        }
+    }
+
+    newRandomBtn.addEventListener('click', () => {
+        loadNewQuestion();
+    });
+    submitRandomBtn.addEventListener('click', checkRandomAnswer);
+    
+    // initialise random question on page load
+    loadNewQuestion();
+
+    // bonus: reset any extra behaviors
+    // add some interactive teaching for LIKE TERMS card: default help on click maybe
+    // ensure all feedbacks initial style
+    const allFeedbacks = [simplifyFeedback, eqFeed, eqFeed2, transFeed];
+    // preload nothing extra
+</script>
+</body>
+</html>
             margin: 0;
             padding: 0;
             box-sizing: border-box;
